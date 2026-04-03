@@ -4,21 +4,19 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User;
+use App\Models\Author;
 
-class UserController extends Controller
+class AuthorController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $user=user::all();
-        
-        
-    
-
-    return response()->json($user,200);
+       
+            $author=Author::all();
+           // dd($author);
+            return response()->json($author,200);
 
     }
 
@@ -26,14 +24,15 @@ class UserController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        $user=User::create([
+    {       //dd(1);
+            $author=Author::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => $request-> password,
-        ]);
+            
+            ]);
+        dd($request);
+        return response()->json($author,201);
 
-        return response()->json($user,201);
     }
 
     /**
@@ -57,18 +56,12 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        $user = User::find($id);
-        if($user){
-             $user->delete();
+       $author = Author::findOrFail($id);
 
-            return response()->json([
-                'message' => 'User deleted successfully'
-            ], 200);
-        }else{
-             return response()->json([
-            'message' => 'Product do not exist or deleted already'
+        $author->delete();
+
+        return response()->json([
+            'message' => 'Author deleted successfully'
         ], 200);
-        }
-       
     }
 }

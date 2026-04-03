@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-//use app\Models\Article;
 use App\Models\Article;
+
 class ArticleController extends Controller
 {
     /**
@@ -12,12 +13,11 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        //
+       
+            $article=Article::all();
+           // dd($author);
+            return response()->json($article,200);
     }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
        $article= Article::create([
@@ -31,25 +31,16 @@ class ArticleController extends Controller
     }
 
     /**
+     * Store a newly created resource in storage.
+     */
+    
+
+    /**
      * Display the specified resource.
      */
-    public function show()
-    {   $article=Article::all();
-       
-        $article = article::with('author:id,name')
-        ->select('id', 'title',  'author_id', 'content')
-        ->get()
-        ->map(function ($article) {
-            return [
-                'id' => $article->id,
-                'title' => $article->title,
-                'author' => $article->author->name,
-                'content' => $article->content,
-               
-            ];
-        });
-   // dd($article);
-    return response()->json($article, 200);
+    public function show(string $id)
+    {
+        //
     }
 
     /**
@@ -63,8 +54,61 @@ class ArticleController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
-    {
-        //
+    // public function destroy(string $id)
+    // {
+    //     $article = Article::find($id);
+
+    //     if($article){
+    //         $article->delete();
+
+    //         return response()->json([
+    //             'message' => 'Article deleted successfully'
+    //         ], 200);
+    //     }else{
+    //         return response()->json([
+    //             'message' => 'Article do not exist or deleted already'
+    //         ], 200);
+    //     }
+        
+    // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+public function destroy($id){
+    $article = Article::Find($id);
+    if($article){
+        $article->delete;
+            return response()->json(["message"=>"Article deleted successfully"],200);
+    }else{
+            return response()->json(["message"=>"Article do not exist or deleted already"],200);
     }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
 }

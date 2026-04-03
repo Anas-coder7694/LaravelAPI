@@ -4,22 +4,15 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User;
-
-class UserController extends Controller
+use App\Models\Category;
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $user=user::all();
-        
-        
-    
-
-    return response()->json($user,200);
-
+        //
     }
 
     /**
@@ -27,13 +20,13 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $user=User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => $request-> password,
-        ]);
+        $category=Category::create([
+        'name' => $request->name,
+        
+        
+    ]);
 
-        return response()->json($user,201);
+    return response()->json($category,201);
     }
 
     /**
@@ -57,18 +50,13 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        $user = User::find($id);
-        if($user){
-             $user->delete();
-
-            return response()->json([
-                'message' => 'User deleted successfully'
-            ], 200);
-        }else{
-             return response()->json([
-            'message' => 'Product do not exist or deleted already'
-        ], 200);
-        }
        
+        $category = Category::findOrFail($id);
+
+        $category->delete();
+
+        return response()->json([
+            'message' => 'category deleted successfully'
+        ], 200);
     }
 }
